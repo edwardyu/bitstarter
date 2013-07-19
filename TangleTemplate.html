@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Tangle document</title>
+
+    <!-- Tangle -->
+    <script type="text/javascript" src="js/Tangle.js"></script>
+
+    <!-- TangleKit (optional) -->
+    <link rel="stylesheet" href="css/TangleKit.css" type="text/css">
+    <script type="text/javascript" src="js/mootools.js"></script>
+    <script type="text/javascript" src="js/sprintf.js"></script>
+    <script type="text/javascript" src="js/BVTouchable.js"></script>
+    <script type="text/javascript" src="js/TangleKit.js"></script>
+    <script src="http://d3js.org/d3.v2.min.js?2.10.0"></script>
+    <script src="js/xkcd.js"></script>
+    <style>
+
+@font-face {
+    font-family: "xkcd";
+    src: url('http://antiyawn.com/uploads/Humor-Sans.ttf');
+}
+
+body {
+    font-family: "xkcd", sans-serif;
+    font-size: 16px;
+    color: #333;
+    text-align: center;
+    margin-top: 75px;
+}
+
+text {
+    font-size: 20px;
+}
+
+path {
+    fill: none;
+    stroke-width: 2.5px;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+path.axis {
+    stroke: black;
+}
+
+path.bgline {
+    stroke: white;
+    stroke-width: 6px;
+}
+
+</style>
+
+    <!-- example -->
+    <script type="text/javascript">
+var drawplot = function(k) {
+        // Generate some data.
+        function f1 (k, x) {
+            return 30/k * x;
+        }
+
+        function f2 (k, x) {
+            return 20 * Math.abs(Math.cos(10 * x/k));
+        }
+
+        var xmin = -1.0
+        var xmax = 7;
+        var N = 100;
+        var data = d3.range(xmin, xmax, (xmax - xmin) / N).map(function (d) {
+                return {x: d, y: f1(k, d)};
+            });
+        var data2 = d3.range(xmin, xmax, (xmax - xmin) / N).map(function (d) {
+                return {x: d, y: f2(k, d)};
+            });
+
+        if(typeof d3.select("svg") != 'undefined')
+            d3.select("svg").remove();  
+        // Build the plot.
+        var plot = xkcdplot();
+        plot("body");
+
+        // Add the lines.
+        plot.plot(data);
+        plot.plot(data2, {stroke: "red"});
+
+        // Render the image.
+        plot.xlim([-1.5, 7.5]).draw();
+};
+
+        function setUpTangle () {
+
+            var element = document.getElementById("example");
+
+            var tangle = new Tangle(element, {
+                initialize: function () {
+                    this.days = 10;
+                    
+                },
+                update: function () {
+                        drawplot(this.days);
+                        }
+            });
+        }
+
+    </script>
+</head>
+
+<body onload="setUpTangle();">
+
+    <p id="example" class="xkcd">
+        I want a gift every <span data-var="days" class="TKAdjustableNumber" data-min="1" data-max="100"> days</span>.
+    </p>
+
+</body>
+</html>

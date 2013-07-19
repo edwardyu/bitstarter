@@ -1,0 +1,95 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>XKCD plots in d3</title>
+
+    <script src="http://d3js.org/d3.v2.min.js?2.10.0"></script>
+    <script src="js/xkcd.js"></script>
+    <script type="text/javascript" src="http://worrydream.com/Tangle/Tangle.js"></script>
+
+<style>
+
+@font-face {
+    font-family: "xkcd";
+    src: url('http://antiyawn.com/uploads/Humor-Sans.ttf');
+}
+
+.xkcd.body {
+    font-family: "xkcd", sans-serif;
+    font-size: 16px;
+    color: #333;
+    text-align: center;
+    margin-top: 75px;
+}
+
+xkcd.text.title {
+    font-size: 20px;
+}
+
+xkcd.path {
+    fill: none;
+    stroke-width: 2.5px;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+xkcd.path.axis {
+    stroke: black;
+}
+
+xkcd.path.bgline {
+    stroke: white;
+    stroke-width: 6px;
+}
+
+</style>
+
+</head>
+
+
+<body>
+    <script>
+function drawplot() {
+        // Generate some data.
+        function f1 (x) {
+            return Math.exp(-0.5 * (x - 1) * (x - 1)) * Math.sin(x + 0.2) + 0.05;
+        }
+
+        function f2 (x) {
+            return 0.5 * Math.cos(x - 0.5) + 0.1;
+        }
+
+        var xmin = -1.0
+        var xmax = 7;
+        var N = 100;
+        var data = d3.range(xmin, xmax, (xmax - xmin) / N).map(function (d) {
+                return {x: d, y: f1(d)};
+            });
+        var data2 = d3.range(xmin, xmax, (xmax - xmin) / N).map(function (d) {
+                return {x: d, y: f2(d)};
+            });
+
+        if(typeof d3.select("svg") != 'undefined')
+            d3.select("svg").remove();  
+        // Build the plot.
+        var plot = xkcdplot();
+        plot("body");
+
+        // Add the lines.
+        plot.plot(data);
+        plot.plot(data2, {stroke: "red"});
+
+        // Render the image.
+        plot.xlim([-1.5, 7.5]).draw();
+}
+    </script>
+
+<script type="text/javascript">
+    var tangle = new Tangle(document.getElementbyID("t"), {
+        initialize: function () {this.days = 10;},
+        update: function() {this.monthlypackages = 30/this.days;}
+    });
+</script>
+<p id="t">Get a gift every <span data-var="days" class="TKAdjustableNumber"> days, in a month you get <span data-var="monthlypackages"> packages.</span></p>
+</body>
+</html>
