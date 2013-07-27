@@ -6,8 +6,8 @@ request({uri : webpage, json:true, headers:{useragent: 'rrandomize product bot v
 	if(!error && response.statusCode == 200) {
 		for(var key in body.data.children) {
 			var url = body.data.children[key].data.url;
-			var asin = url.match(/http:\/\/(?:www\.|)amazon\.com\/(?:gp\/product|[^\/]+\/dp|dp)\/([^\/]+)/);
-			console.log(asin);
+			var asin = url.match(/http:\/\/(?:www\.|)amazon\.com\/(?:gp\/product|[^\/]+\/dp|dp)\/([^\/]+)/); //regex to extract asin from url
+			console.log(asin[1]);
 		}
 		
 	}
