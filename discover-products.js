@@ -1,3 +1,6 @@
+/*
+Scrapes Amazon items from reddit and adds them to a database
+*/
 var request = require('request');
 var urls = ['http://www.reddit.com/r/AmazonUnder5/hot.json?limit=100',
  'http://www.reddit.com/r/AmazonUnder15/hot.json?limit=100', 
