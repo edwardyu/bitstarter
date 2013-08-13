@@ -11,7 +11,7 @@ app.get('/', function(request, response) {
 
 app.post('/betalist', function(request, response) {
 	var email = request.body.email;
-	console.log(email);
+	response.send(email);
 });
 
 var port = process.env.PORT || 8080;
