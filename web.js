@@ -10,7 +10,8 @@ app.get('/', function(request, response) {
 });
 
 app.post('/betalist', function(request, response) {
-	response.send(request.body);
+	var email = request.body.email;
+	console.log(email);
 });
 
 var port = process.env.PORT || 8080;
