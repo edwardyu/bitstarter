@@ -14,7 +14,7 @@ app.post('/betalist', function(request, response) {
 	var email = request.body.email;
 	if(isValidEmail(email)) {
 		fs.openSync('emails.txt', 'a');
-		fs.appendFile('emails.txt', email, function (err) {
+		fs.appendFile('emails.txt', email + '\n', function (err) {
 			if (err) throw err;
 		});
 		console.log(email + 'was appended to file.');
