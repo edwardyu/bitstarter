@@ -17,11 +17,13 @@ app.post('/betalist', function(request, response) {
 		fs.appendFile('emails.txt', email, function (err) {
 			if (err) throw err;
 		});
-
-		response.send(email + ' was appended to file!');
+		console.log(email + 'was appended to file.');
+		response.redirect('/');
 	}
-	else
-		response.send("Not a valid email.");
+	else {
+		console.log('Not a valid email.');
+		response.redirect('/');
+	}
 });
 
 var port = process.env.PORT || 8080;
