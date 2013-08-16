@@ -1,6 +1,8 @@
 var express = require('express');
 var fs = require('fs');
 var app = express.createServer(express.logger());
+var mongojs = require('mongojs');
+var db = mongojs('admin:test@dharma.mongohq.com:10092/app17035271',['emails']);
 
 app.use(express.bodyParser());
 app.use(express.static(__dirname));
@@ -13,11 +15,11 @@ app.get('/', function(request, response) {
 app.post('/betalist', function(request, response) {
 	var email = request.body.email;
 	if(isValidEmail(email)) {
-		fs.openSync('emails.txt', 'a');
-		fs.appendFile('emails.txt', email + '\n', function (err) {
-			if (err) throw err;
+		db.emails.insert({'email': email}, function(err) {
+			if(err)
+				console.log('Error: ' + err);
 		});
-		console.log(email + 'was appended to file.');
+		console.log(email + 'was added to database');
 		response.redirect('/');
 	}
 	else {
