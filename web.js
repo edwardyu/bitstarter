@@ -19,7 +19,7 @@ app.post('/betalist', function(request, response) {
 			if(err)
 				console.log('Error: ' + err);
 		});
-		console.log(email + 'was added to database');
+		console.log(email + ' was added to database.\n');
 		response.redirect('/');
 	}
 	else {
