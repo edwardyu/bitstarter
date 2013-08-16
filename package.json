@@ -1,8 +1,10 @@
 {
-  "name": "node-example",
+  "name": "rrandomize",
   "version": "0.0.1",
   "dependencies": {
-    "express": "2.5.x"
+    "express": "2.5.x",
+    "mongojs": "0.7.16",
+    "request": "2.25.0"
   },
   "engines": {
     "node": "0.8.x",
